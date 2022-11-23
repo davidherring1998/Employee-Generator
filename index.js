@@ -1,104 +1,87 @@
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/intern');
-const Manager = require('./lib/manager.js')
-const inquirer = require('inquirer');
-const fs = require('fs');
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
+const Manager = require("./lib/manager");
+const render = require("./lib/render");
+const inquirer = require("inquirer");
+const path = require("path");
+const fs = require("fs");
+
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
+const renderHTML = require('./lib/render');
+const generateManager = require("./lib/render");
 
 
-// enter manager's info 
-inquirer
-.prompt([
-    {
-        type: 'input',
-        name: 'name',
-        message: `What is your team manager's name?`
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: `What is your employee's ID?`
-    }, 
-    {
-        type: 'input',
-        name: 'email',
-        message: `What is your employee's email?`
-    },
-    {
-        type: 'input',
-        name: 'officeNum',
-        message: `What is your office number?`,
-    }, 
-])
-.then((answers)=> {
-    add()
-})
-
-function add () {inquirer
+const team = [];
+const createMember = () => {
+  inquirer
     .prompt([
-        {
-            type: 'list',
-            name: 'role',
-            message: `What role would you like to add?`,
-            choices: ['Engineer', 'Intern']
-        }
+      {
+        type: "input",
+        name: "welcome",
+        message: `Welcome team member, press enter to continue.`,
+      },
+      {
+        type: "input",
+        name: "name",
+        message: `What is your name?`,
+      },
+      {
+        type: "input",
+        name: "id",
+        message: `What is your ID?`,
+      },
+      {
+        type: "input",
+        name: "email",
+        message: `What is your email?`,
+      },
+      {
+        type: "list",
+        name: "roleType",
+        message: `What is your role?`,
+        choices: ['Manager', 'Engineer', 'Intern' ]
+      },
     ])
-    .then((answers) => {
-        if(answers === 'Engineer'){
-            addEngineer()
-        } else {
-            addIntern()
-        }
+    .then((answers1) => {
+      if (answers1.roleType === 'Manager') {
+        inquirer.prompt([
+          {
+            type: "input",
+            name: "officeNum",
+            message: "What is your office number?",
+          },
+        ]).then((answers2 => {
+          const manager = new Manager(answers1.name, answers1.id, answers1.email, answers2.officeNum)
+          team.push(manager);
+        }))
+      } else if (answers1.roleType === "Engineer") {
+        inquirer.prompt([
+          {
+            type: "input",
+            name: "gitHub",
+            message: "What is your GitHub username?",
+          },
+        ]).then((answers3) => {
+            const engineer = new Engineer(answers1.name, answers1.id, answers1.email, answers3.gitHub)
+          team.push(engineer);
+        }) 
+      } else if (answers1.roleType === "Intern") {
+        inquirer.prompt([
+          {
+            type: "input",
+            name: "school",
+            message: "What is your school's name?",
+          },        
+        ]).then((answers4) => {
+          const intern = new Intern(answers1.name, answers1.id, answers1.email, answers4.school)
+          team.push(intern);
+        })
+      } 
+    }).then((answers1,answers2,answers3,answers4) => {
+      console.log(manager)
     })
-}
+  }
 
-function addEngineer () {
-    inquirer
-.prompt([
-    {
-        type: 'input',
-        name: 'name',
-        message: `What is your new engineer's name?`
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: `What is your engineer's ID?`
-    }, 
-    {
-        type: 'input',
-        name: 'email',
-        message: `What is your engineer's email?`
-    },
-    {
-        type: 'input',
-        name: 'gitHub',
-        message: `What is your engineers GitHub url?`,
-    }, 
-])
-}
-
-function addIntern () {
-    inquirer
-.prompt([
-    {
-        type: 'input',
-        name: 'name',
-        message: `What is your intern name?`
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: `What is your intern's ID?`
-    }, 
-    {
-        type: 'input',
-        name: 'email',
-        message: `What is your intern's email?`
-    },
-    {
-        type: 'input',
-        name: 'officeNum',
-        message: `What is your intern's school name?`,
-    }, 
-])
-}
+createMember();
