@@ -1,19 +1,15 @@
 const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
-const render = require("./lib/render");
+const renderManager = require("./lib/templates/renderManager");
+const renderEngineer = require("./lib/templates/renderIntern");
+
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const renderHTML = require('./lib/render');
-const generateManager = require("./lib/render");
-
-
-const team = [];
+// const team = [];
 const createMember = () => {
   inquirer
     .prompt([
@@ -53,8 +49,8 @@ const createMember = () => {
             message: "What is your office number?",
           },
         ]).then((answers2 => {
-          const manager = new Manager(answers1.name, answers1.id, answers1.email, answers2.officeNum)
-          team.push(manager);
+          const manager = new Manager(answers1.name, answers1.id, answers1.email, answers2.officeNum);
+          return true;
         }))
       } else if (answers1.roleType === "Engineer") {
         inquirer.prompt([
@@ -65,7 +61,7 @@ const createMember = () => {
           },
         ]).then((answers3) => {
             const engineer = new Engineer(answers1.name, answers1.id, answers1.email, answers3.gitHub)
-          team.push(engineer);
+            return true;
         }) 
       } else if (answers1.roleType === "Intern") {
         inquirer.prompt([
@@ -76,11 +72,13 @@ const createMember = () => {
           },        
         ]).then((answers4) => {
           const intern = new Intern(answers1.name, answers1.id, answers1.email, answers4.school)
-          team.push(intern);
+          return true;
         })
       } 
-    }).then((answers1,answers2,answers3,answers4) => {
-      console.log(manager)
+    }).then((answers1,answers2) => {
+      if(answers2 === true){
+        renderManager(answers1,answers2)
+      }
     })
   }
 
