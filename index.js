@@ -5,77 +5,6 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
-
-// const createMember = () => {
-//   inquirer
-//     .prompt([
-//       {
-//         type: "input",
-//         name: "welcome",
-//         message: `Welcome team member, press enter to continue.`,
-//       },
-//       {
-//         type: "input",
-//         name: "name",
-//         message: `What is your name?`,
-//       },
-//       {
-//         type: "input",
-//         name: "id",
-//         message: `What is your ID?`,
-//       },
-//       {
-//         type: "input",
-//         name: "email",
-//         message: `What is your email?`,
-//       },
-//       {
-//         type: "list",
-//         name: "roleType",
-//         message: `What is your role?`,
-//         choices: ['Manager', 'Engineer', 'Intern' ]
-//       },
-//     ])
-//     .then((answers1) => {
-//       if (answers1.roleType === 'Manager') {
-//         inquirer.prompt([
-//           {
-//             type: "input",
-//             name: "officeNum",
-//             message: "What is your office number?",
-//           },
-//         ]).then((answers2 => {
-//           const manager = new Manager(answers1.name, answers1.id, answers1.email, answers2.officeNum);
-//           buildTeam(manager)
-//         }))
-//       } else if (answers1.roleType === "Engineer") {
-//         inquirer.prompt([
-//           {
-//             type: "input",
-//             name: "gitHub",
-//             message: "What is your GitHub username?",
-//           },
-//         ]).then((answers3) => {
-//             const engineer = new Engineer(answers1.name, answers1.id, answers1.email, answers3.gitHub)
-//           buildTeam(engineer);
-//         })
-//       } else if (answers1.roleType === "Intern") {
-//         inquirer.prompt([
-//           {
-//             type: "input",
-//             name: "school",
-//             message: "What is your school's name?",
-//           },
-//         ]).then((answers4) => {
-//           const intern = new Intern(answers1.name, answers1.id, answers1.email, answers4.school)
-//           buildTeam(intern);
-
-//         })
-//       }
-//     })
-//   }
-// createMember();
-
 function managerQuestions() {
   inquirer
     .prompt([
@@ -137,7 +66,7 @@ function managerQuestions() {
           {
             type: "input",
             name: "gitHub",
-            message: `What is your team engineer's GitHub username?`,
+            message: `What is your team engineer's GitHub url?`,
           },
         ]).then((answers2) => {
           const engineer = new Engineer(
@@ -206,39 +135,39 @@ function buildTeam(manager, engineer,intern) {
           <!-- header -->
             <header style="text-align: center; background-color:aqua;padding:2%;margin: .5%; font-size: 32px; color: red;">My Team</header>
           <!-- body cards -->
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 98%; border: solid 5px red; margin: 10px;">
               <div class="card-header">
                 ${manager.name}
               </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Manager</li>
-                <li class="list-group-item">Email: <a href="mailto:${manager.email}>${manager.email}</a></li>
+                <li class="list-group-item">Email: <a href="mailto:${manager.email}">${manager.email}</a></li>
                 <li class="list-group-item">ID:${manager.id}</li>
                 <li class="list-group-item">Office number:${manager.officeNum}</li>
               </ul>
             </div>
 
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 98%; border: solid 5px red; margin: 10px;">
             <div class="card-header">
               ${engineer.name}
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Manager</li>
+              <li class="list-group-item">Engineer</li>
               <li class="list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
               <li class="list-group-item">ID:${engineer.id}</li>
-              <li class="list-group-item">Office number:${engineer.officeNum}</li>
+              <li class="list-group-item">GitHub link:<a href="${engineer.gitHub}"</li>
             </ul>
           </div>
 
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 98%; border: solid 5px red; margin: 10px;">
           <div class="card-header">
             ${intern.name}
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">Manager</li>
+            <li class="list-group-item">Intern</li>
             <li class="list-group-item">Email: <a href="mailto:${intern.email}">${intern.email}</a></li>
             <li class="list-group-item">ID:${intern.id}</li>
-            <li class="list-group-item">Office number:${intern.officeNum}</li>
+            <li class="list-group-item">School:${intern.school}</li>
           </ul>
         </div>
       </body>
@@ -248,4 +177,3 @@ function buildTeam(manager, engineer,intern) {
         err ? console.log(err) : console.log("Successfully created index.html!")
       );
 }
-
