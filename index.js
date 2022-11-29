@@ -2,127 +2,140 @@ const Engineer = require("./lib/engineer");
 const Intern = require("./lib/intern");
 const Manager = require("./lib/manager");
 const inquirer = require("inquirer");
-const path = require("path");
 const fs = require("fs");
 
 function managerQuestions() {
   inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "welcome",
-        message: `Let's create your team manager!`,
-      },
-      {
-        type: "input",
-        name: "name1",
-        message: `What is your team manager's name?`,
-      },
-      {
-        type: "input",
-        name: "id1",
-        message: `What is your team manager' id?`,
-      },
-      {
-        type: "input",
-        name: "email1",
-        message: `What is your team manager's email?`,
-      },
-      {
-        type: "input",
-        name: "officeNum",
-        message: `What is your team manager's office number?`,
-      },
-    ])
-    .then((answers1) => {
-      const manager = new Manager(
-        answers1.name1,
-        answers1.id1,
-        answers1.email1,
-        answers1.officeNum
-      );
-      if(answers1.officeNum) {
-        inquirer.prompt([
-          {
-            type: "input",
-            name: "welcome2",
-            message: `Let's create your team's engineer!`,
-          },
-          {
-            type: "input",
-            name: "name2",
-            message: `What is your team engineer's name?`,
-          },
-          {
-            type: "input",
-            name: "id2",
-            message: `What is your team engineer's id?`,
-          },
-          {
-            type: "input",
-            name: "email2",
-            message: `What is your team engineer's email?`,
-          },
-          {
-            type: "input",
-            name: "gitHub",
-            message: `What is your team engineer's GitHub url?`,
-          },
-        ]).then((answers2) => {
-          const engineer = new Engineer(
-            answers2.name2,
-            answers2.id2,
-            answers2.email2,
-            answers2.gitHub
-          );
-          if(answers2.gitHub) {
-            inquirer.prompt([
-              {
-                type: "input",
-                name: "welcome3",
-                message: `Let's create your team's intern!`,
-              },
-              {
-                type: "input",
-                name: "name3",
-                message: `What is your team intern's name?`,
-              },
-              {
-                type: "input",
-                name: "id3",
-                message: `What is your team intern's id?`,
-              },
-              {
-                type: "input",
-                name: "email3",
-                message: `What is your team intern's email?`,
-              },
-              {
-                type: "input",
-                name: "school",
-                message: `What is your team intern's school?`,
-              },
-            ]).then((answers3) => {
-              const intern = new Intern(
-                answers3.name3,
-                answers3.id3,
-                answers3.email3,
-                answers3.school
-              );
-              buildTeam(manager, engineer, intern)
-            })
-          }
-        })
-      }
+    .prompt({
+      type: "list",
+      name: "introduction",
+      message: "Would you like to begin building your team?",
+      choices: ["Yes", "No"],
     })
+    .then((ans) => {
+      if (ans.introduction === "Yes") {
+        inquirer
+          .prompt([
+            {
+              type: "input",
+              name: "welcome",
+              message: `Let's create your team manager!`,
+            },
+            {
+              type: "input",
+              name: "name1",
+              message: `What is your team manager's name?`,
+            },
+            {
+              type: "input",
+              name: "id1",
+              message: `What is your team manager' id?`,
+            },
+            {
+              type: "input",
+              name: "email1",
+              message: `What is your team manager's email?`,
+            },
+            {
+              type: "input",
+              name: "officeNum",
+              message: `What is your team manager's office number?`,
+            },
+          ])
+          .then((answers1) => {
+            const manager = new Manager(
+              answers1.name1,
+              answers1.id1,
+              answers1.email1,
+              answers1.officeNum
+            );
+            if (answers1.officeNum) {
+              inquirer
+                .prompt([
+                  {
+                    type: "input",
+                    name: "welcome2",
+                    message: `Let's create your team's engineer!`,
+                  },
+                  {
+                    type: "input",
+                    name: "name2",
+                    message: `What is your team engineer's name?`,
+                  },
+                  {
+                    type: "input",
+                    name: "id2",
+                    message: `What is your team engineer's id?`,
+                  },
+                  {
+                    type: "input",
+                    name: "email2",
+                    message: `What is your team engineer's email?`,
+                  },
+                  {
+                    type: "input",
+                    name: "gitHub",
+                    message: `What is your team engineer's GitHub username?`,
+                  },
+                ])
+                .then((answers2) => {
+                  const engineer = new Engineer(
+                    answers2.name2,
+                    answers2.id2,
+                    answers2.email2,
+                    answers2.gitHub
+                  );
+                  if (answers2.gitHub) {
+                    inquirer
+                      .prompt([
+                        {
+                          type: "input",
+                          name: "welcome3",
+                          message: `Let's create your team's intern!`,
+                        },
+                        {
+                          type: "input",
+                          name: "name3",
+                          message: `What is your team intern's name?`,
+                        },
+                        {
+                          type: "input",
+                          name: "id3",
+                          message: `What is your team intern's id?`,
+                        },
+                        {
+                          type: "input",
+                          name: "email3",
+                          message: `What is your team intern's email?`,
+                        },
+                        {
+                          type: "input",
+                          name: "school",
+                          message: `What is your team intern's school?`,
+                        },
+                      ])
+                      .then((answers3) => {
+                        const intern = new Intern(
+                          answers3.name3,
+                          answers3.id3,
+                          answers3.email3,
+                          answers3.school
+                        );
+                        buildTeam(manager, engineer, intern);
+                      });
+                  }
+                });
+            }
+          });
+      }
+    });
 }
 
 managerQuestions();
 
-function buildTeam(manager, engineer,intern) {
-  const generateHTML = ({
-      }) =>
-        `<!DOCTYPE html>
+function buildTeam(manager, engineer, intern) {
+  const generateHTML = ({}) =>
+    `<!DOCTYPE html>
       <html lang="en">
       <head>
           <meta charset="UTF-8">
@@ -155,7 +168,7 @@ function buildTeam(manager, engineer,intern) {
               <li class="list-group-item">Engineer</li>
               <li class="list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
               <li class="list-group-item">ID:${engineer.id}</li>
-              <li class="list-group-item">GitHub link:<a href="${engineer.gitHub}"</li>
+              <li class="list-group-item">GitHub link: <a href="https://github.com/${engineer.github}">GitHub</a></li>
             </ul>
           </div>
 
@@ -172,8 +185,8 @@ function buildTeam(manager, engineer,intern) {
         </div>
       </body>
       </html>`;
-      const htmlPageContent = generateHTML(manager, engineer, intern);
-      fs.writeFile("index.html", htmlPageContent, (err) =>
-        err ? console.log(err) : console.log("Successfully created index.html!")
-      );
+  const htmlPageContent = generateHTML(manager, engineer, intern);
+  fs.writeFile("index.html", htmlPageContent, (err) =>
+    err ? console.log(err) : console.log("Successfully created index.html!")
+  );
 }
