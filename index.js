@@ -168,7 +168,7 @@ function buildTeam(manager, engineer, intern) {
               <li class="list-group-item">Engineer</li>
               <li class="list-group-item">Email: <a href="mailto:${engineer.email}">${engineer.email}</a></li>
               <li class="list-group-item">ID:${engineer.id}</li>
-              <li class="list-group-item">GitHub link: <a href="https://github.com/${engineer.github}">GitHub</a></li>
+              <li class="list-group-item">GitHub link: <a href="https://github.com/${engineer.github}" target="_blank">Click</a></li>
             </ul>
           </div>
 

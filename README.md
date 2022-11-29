@@ -1,2 +1,11 @@
 # Employee-Generator
-Functionality: A user can generate a webpage that displays their basic info so they can quickly access their email and github profiles. When the user prompts the command-line application, the user is given the option to create a manager by inputting the manager's information. Then the user is given the option to create a team engineer and is prompted to input the engineer's github that turns into a clickable link. Next the user is prompted to create a team intern. All of the email's are clickable and the user's default email program opens and populates the TO field with the employee's email. 
+About: A user can generate a webpage that displays their team's basic info so they can quickly access their email and github profiles. When the user prompts the command-line application, the user is given the option to create a manager by inputting the manager's information. Then the user is given the option to create a team engineer and is prompted to input the engineer's github that turns into a clickable link. Next the user is prompted to create a team intern. All of the email's are clickable and the user's default email program opens and populates the TO field with the employee's email. 
+
+Links: 
+* Video Walk through: https://drive.google.com/file/d/1TYKe-Ha_bC6lH3mVfIZaZaRljd96lgYK/view
+* Repository: https://github.com/davidherring1998/Employee-Generator
+
+Screenshots: 
+
+
+
