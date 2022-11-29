@@ -6,6 +6,9 @@ Links:
 * Repository: https://github.com/davidherring1998/Employee-Generator
 
 Screenshots: 
+<img width="1512" alt="Screen Shot 2022-11-29 at 12 07 10 PM" src="https://user-images.githubusercontent.com/106282330/204611824-65281d39-954d-4b41-a381-3b1d82d79584.png">
+<img width="1512" alt="Screen Shot 2022-11-29 at 12 06 48 PM" src="https://user-images.githubusercontent.com/106282330/204611833-c48f2dfb-e257-4ba6-a3eb-126bf4f799e7.png">
+
 
 
 
